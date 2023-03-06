@@ -10,32 +10,33 @@ import Layout from '../../../layouts';
 import Page from '../../../components/Page';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import UserNewEditForm from 'src/sections/user/UserNewEditForm';
+import BannerNewEditForm from 'src/sections/banner/BannerNewEditForm';
 // sections
 // import UserNewEditForm from '../../../sections/@dashboard/user/UserNewEditForm';
 
 // ----------------------------------------------------------------------
 
-UserCreate.getLayout = function getLayout(page: React.ReactElement) {
+BannerCreate.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
 // ----------------------------------------------------------------------
 
-export default function UserCreate() {
+export default function BannerCreate() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="User: Create a new user">
+    <Page title="User: Create a new banner">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Create a new user"
+          heading="Create a new banner"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.list },
-            { name: 'New user' },
+            { name: 'Banner', href: PATH_DASHBOARD.banner.root },
+            { name: 'New Banner' },
           ]}
         />
-        <UserNewEditForm />
+        <BannerNewEditForm />
       </Container>
     </Page>
   );

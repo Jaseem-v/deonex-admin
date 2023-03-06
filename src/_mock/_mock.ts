@@ -8,7 +8,7 @@ import { phoneNumber } from './phoneNumber';
 import { fullAddress, country } from './address';
 import { firstName, lastName, fullName } from './name';
 import { title, sentence, description } from './text';
-import { price, rating, age, percent } from './number';
+import { price, rating, age, percent, quantity } from './number';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +39,7 @@ const _mock = {
     rating: (index: number) => rating[index],
     age: (index: number) => age[index],
     price: (index: number) => price[index],
+    quantity: (index: number) => quantity[index],
   },
   image: {
     cover: (index: number) =>

@@ -7,7 +7,7 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 import { paramCase } from 'change-case';
 import Scrollbar from '../../components/Scrollbar';
 
-import { _userList } from '../../_mock';
+import { _bannerList } from '../../_mock';
 
 // @mui
 import {
@@ -40,9 +40,9 @@ import {
   TableHeadCustom,
 } from '../../components/table';
 // sections
-import  UserTableRow  from '../../sections/UserTableRow';
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs';
 import Iconify from 'src/components/Iconify';
+import BannerTableRow from 'src/sections/banner/BannerTableRow';
 
 // ----------------------------------------------------------------------
 
@@ -56,10 +56,9 @@ BannerList.getLayout = function getLayout(page: ReactElement) {
 
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: 'email', label: 'email', align: 'left' },
-  { id: 'phoneNumber', label: 'phoneNumber', align: 'left' },
-  { id: 'country', label: 'country', align: 'left' },
+  { id: 'id', label: 'id', align: 'left' },
+  { id: 'image', label: 'image', align: 'left' },
+  { id: 'visibility', label: 'visibility', align: 'left' },
   { id: 'status', label: 'Status', align: 'left' },
   { id: '' },
 ];
@@ -96,7 +95,7 @@ export default function BannerList() {
 
   const { push } = useRouter();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState(_bannerList);
 
 
   const { currentTab: filterStatus, onChangeTab: onChangeFilterStatus } = useTabs('all');
@@ -125,16 +124,16 @@ export default function BannerList() {
       <Container maxWidth={themeStretch ? false : 'xl'}>
 
       <HeaderBreadcrumbs
-          heading="User List"
+          heading="Banner List"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
+            { name: 'Banner', href: PATH_DASHBOARD.banner.root },
             { name: 'List' },
           ]}
           action={
-            <NextLink href={PATH_DASHBOARD.user.new} passHref>
+            <NextLink href={PATH_DASHBOARD.banner.new} passHref>
               <Button variant="contained" startIcon={<Iconify icon={'eva:plus-fill'} />}>
-                New User
+                New Banner
               </Button>
             </NextLink>
           }
@@ -169,13 +168,13 @@ export default function BannerList() {
                   {tableData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
-                      <UserTableRow
+                      <BannerTableRow
                         key={row.id}
                         row={row}
                         selected={selected.includes(row.id)}
                         onSelectRow={() => onSelectRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={() => handleEditRow(row.name)}
+                        onEditRow={() => handleEditRow(row.id)}
                       />
                     ))}
 

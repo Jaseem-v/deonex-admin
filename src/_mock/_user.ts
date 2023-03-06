@@ -129,5 +129,33 @@ export const _userList = [...Array(24)].map((_, index) => ({
   state: 'Virginia',
   city: 'Rancho Cordova',
   zipCode: '85807',
-  status: randomInArray(['active', 'banned']),
+  status: randomInArray(['active', 'inactive']),
+}));
+export const _bannerList = [...Array(5)].map((_, index) => ({
+  id: _mock.id(index),
+  avatarUrl: _mock.image.avatar(index),
+  status: randomInArray(['active', 'inactive']),
+  visibility: randomInArray(['visible', 'not visible']),
+}));
+export const _categoriesList = [...Array(5)].map((_, index) => ({
+  id: _mock.id(index),
+  name: _mock.name.fullName(index),
+  avatarUrl: _mock.image.avatar(index),
+  status: randomInArray(['active', 'inactive']),
+  visibility: randomInArray(['visible', 'not visible']),
+}));
+
+export const _productList = [...Array(24)].map((_, index) => ({
+  id: _mock.id(index),
+  avatarUrl: _mock.image.avatar(index),
+  name: 'iphone  13 pro',
+  brand:'apple',
+  information:"good product",
+  model:"#12345",
+  actual_price: _mock.number.price(index),
+  sale_price: _mock.number.price(index),
+  discount: _mock.number.price(index),
+  quantity: _mock.number.quantity(index),
+  status: randomInArray(['active', 'inactive']),
+  visibility: randomInArray(['visible', 'not visible']),
 }));

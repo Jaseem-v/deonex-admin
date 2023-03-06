@@ -40,7 +40,7 @@ import {
   TableHeadCustom,
 } from '../../components/table';
 // sections
-import  UserTableRow  from '../../sections/UserTableRow';
+import  UserTableRow  from '../../sections/user/UserTableRow';
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs';
 import Iconify from 'src/components/Iconify';
 

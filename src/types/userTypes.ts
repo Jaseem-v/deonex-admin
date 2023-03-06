@@ -11,3 +11,32 @@ export type UserManager = {
     zipCode: string;
     status: string;
   };
+
+export type ProductType = {
+    id: string;
+    avatarUrl: string;
+    name: string;
+    model: string;
+    brand: string;
+    information: string;
+    actual_price: number;
+    sale_price: number;
+    discount: number;
+    quantity: number;
+    status: string;
+    visibility:string;
+
+  };
+export type BannerTypes = {
+    id: string;
+    avatarUrl: string;
+    status: string;
+    visibility:string
+  };
+export type CategoryTypes = {
+    id: string;
+    name:string;
+    avatarUrl: string;
+    status: string;
+    visibility:string
+  };

@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 // next
 import { useRouter } from 'next/router';
@@ -10,64 +10,65 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel } from '@mui/material';
 // utils
-import { fData } from '../utils/formatNumber';
+import { fData } from '../../utils/formatNumber';
 // routes
-import { PATH_DASHBOARD } from '../routes/paths';
+import { PATH_DASHBOARD } from '../../routes/paths';
 // @types
 // import { UserManager } from '../../../@types/user';
 // _mock
-import { countries } from '../_mock';
+import { countries } from '../../_mock';
 // components
-import Label from '../components/Label';
+import Label from '../../components/Label';
 import {
   FormProvider,
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
-} from '../components/hook-form';
-import { UserManager } from 'src/types/userTypes';
-// import { UserManager } from './UserTableRow';
+} from '../../components/hook-form';
+import { ProductType } from 'src/types/userTypes';
+import { UploadSingleFile } from 'src/components/upload';
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = UserManager;
+type FormValuesProps = ProductType;
 
 type Props = {
   isEdit?: boolean;
-  currentUser?: UserManager;
+  currentUser?: ProductType;
 };
 
-export default function UserNewEditForm({ isEdit = false, currentUser }: Props) {
+export default function ProductNewEditForm({ isEdit = false, currentUser }: Props) {
   const { push } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email(),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    address: Yup.string().required('Address is required'),
-    country: Yup.string().required('country is required'),
-    company: Yup.string().required('Company is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
-    role: Yup.string().required('Role Number is required'),
+    model: Yup.string().required('model is required'),
+    brand: Yup.string().required('brand is required'),
+    information: Yup.string().required('information is required'),
+    actual_price: Yup.number().required('actural_price is required'),
+    sale_price: Yup.number().required('sale_price is required'),
+    discount: Yup.number().required('discount is required'),
+    quantity: Yup.number().required('quantity is required'),
     avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== ''),
   });
 
   const defaultValues = useMemo(
     () => ({
       name: currentUser?.name || '',
-      email: currentUser?.email || '',
-      phoneNumber: currentUser?.phoneNumber || '',
-      address: currentUser?.address || '',
-      country: currentUser?.country || '',
-      state: currentUser?.state || '',
-      city: currentUser?.city || '',
-      zipCode: currentUser?.zipCode || '',
+      model: currentUser?.model || '',
+      brand: currentUser?.brand || '',
+      information: currentUser?.information || '',
+      actual_price: currentUser?.actual_price || 0,
+      sale_price: currentUser?.sale_price || 0,
+      discount: currentUser?.discount || 0,
+      quantity: currentUser?.quantity || 0,
       avatarUrl: currentUser?.avatarUrl || '',
       status: currentUser?.status,
+      visibility: currentUser?.visibility,
+      
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentUser]
@@ -110,21 +111,21 @@ export default function UserNewEditForm({ isEdit = false, currentUser }: Props) 
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
 
-      if (file) {
-        setValue(
-          'avatarUrl',
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
-      }
-    },
-    [setValue]
-  );
+
+  const [file, setFile] = useState(null);
+
+  const handleDropSingleFile = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      setFile(
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
+      );
+    }
+  }, []);
+
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -141,26 +142,13 @@ export default function UserNewEditForm({ isEdit = false, currentUser }: Props) 
             )}
 
             <Box sx={{ mb: 5 }}>
-              <RHFUploadAvatar
-                name="avatarUrl"
+              <UploadSingleFile
+                // name="avatarUrl"
                 // accept="image/*"
+                file={file}
                 maxSize={3145728}
-                onDrop={handleDrop}
-                helperText={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 2,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
+                onDrop={handleDropSingleFile}
+                
               />
             </Box>
 
@@ -225,29 +213,47 @@ export default function UserNewEditForm({ isEdit = false, currentUser }: Props) 
               }}
             >
               <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
+              <RHFTextField name="model" label="Model" />
+              <RHFTextField name="brand" label="Brand" />
 
-              <RHFSelect name="country" label="Country" placeholder="Country">
+              {/* <RHFSelect name="country" label="Country" placeholder="Country">
                 <option value="" />
                 {countries.map((option) => (
                   <option key={option.code} value={option.label}>
                     {option.label}
                   </option>
                 ))}
-              </RHFSelect>
+              </RHFSelect> */}
 
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="address" label="Address" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
-              <RHFTextField name="company" label="Company" />
-              <RHFTextField name="role" label="Role" />
+              <RHFTextField name="information" label="information" />
+              <RHFTextField name="actual_price" label="Actual Price" type="number" />
+              <RHFTextField name="sale_price" label="Sale Price" type="number" />
+              <RHFTextField name="discount" label="discount" type="number" />
+              <RHFTextField name="quantity" label="quantity" type="number" />
+              <RHFSelect name="visibility" label="Visibility" placeholder="Visibility">
+                  <option value={"visible"}>
+                   visible
+                  </option>
+                  <option value={"not-visible"}>
+                   not visible
+                  </option>
+              
+              </RHFSelect>
+              <RHFSelect name="status" label="Status" placeholder="Status">
+                  <option value={"Active"}>
+                   Active
+                  </option>
+                  <option value={"in-active"}>
+                    InActive
+                  </option>
+              
+              </RHFSelect>
+              
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!isEdit ? 'Create User' : 'Save Changes'}
+                {!isEdit ? 'Create Product' : 'Save Changes'}
               </LoadingButton>
             </Stack>
           </Card>

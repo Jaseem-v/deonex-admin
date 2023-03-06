@@ -53,7 +53,7 @@ export default function NavbarAccount({ isCollapse }: Props) {
             Rayan Moran
           </Typography>
           <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
-            user
+            Admin
           </Typography>
         </Box>
       </RootStyle>
