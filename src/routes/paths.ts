@@ -56,6 +56,10 @@ export const PATH_DASHBOARD = {
   product:{
     root: path(ROOTS_DASHBOARD, '/products'),
     new: path(ROOTS_DASHBOARD, '/products/new'),
+  },
+  admin:{
+    root: path(ROOTS_DASHBOARD, '/admin'),
+    new: path(ROOTS_DASHBOARD, '/admin/new'),
   }
 };
 

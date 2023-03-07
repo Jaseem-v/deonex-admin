@@ -8,7 +8,7 @@ export default function Index() {
 
   useEffect(() => {
     if (router.pathname == '/') {
-      router.push('/dashboard/userList');
+      router.push('/login');
     }
   });
 

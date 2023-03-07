@@ -131,6 +131,15 @@ export const _userList = [...Array(24)].map((_, index) => ({
   zipCode: '85807',
   status: randomInArray(['active', 'inactive']),
 }));
+export const _adminList = [...Array(15)].map((_, index) => ({
+  id: _mock.id(index),
+  name: _mock.name.fullName(index),
+  email: _mock.email(index),
+  phone: _mock.phoneNumber(index),
+  password: "********",
+  role:"admin"
+  
+}));
 export const _bannerList = [...Array(5)].map((_, index) => ({
   id: _mock.id(index),
   avatarUrl: _mock.image.avatar(index),

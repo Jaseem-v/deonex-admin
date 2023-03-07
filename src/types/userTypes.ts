@@ -40,3 +40,11 @@ export type CategoryTypes = {
     status: string;
     visibility:string
   };
+export type AdminTypes = {
+    id: string;
+    name:string;
+    email: string;
+    password: string;
+    phone:string;
+    role:string;
+  };

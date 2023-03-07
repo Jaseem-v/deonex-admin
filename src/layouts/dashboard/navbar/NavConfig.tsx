@@ -20,9 +20,10 @@ const sidebarConfig = [
   {
     subheader: 'general',
     items: [
+      { title: 'Admin', path: '/dashboard/admin', icon: ICONS.dashboard },
       { title: 'Users', path: '/dashboard/user', icon: ICONS.dashboard },
       { title: 'Products', path: '/dashboard/products', icon: ICONS.ecommerce },
-      { title: 'BannerList', path: '/dashboard/banner', icon: ICONS.ecommerce },
+      { title: 'Banners', path: '/dashboard/banner', icon: ICONS.ecommerce },
       { title: 'Categories', path: '/dashboard/category', icon: ICONS.analytics },
       { title: 'Coupon', path: '/dashboard/coupon', icon: ICONS.ecommerce },
     ],
